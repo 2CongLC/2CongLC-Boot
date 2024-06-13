@@ -1,0 +1,53 @@
+timeout 15
+default 0
+set /a num=%@random%/3277 + 1
+set menu=()/BOOT/Grub/themes/menu%num%
+gfxmenu /BOOT/Grub/themes/menu%num%.GFX
+configfile (bd)/menu.lst
+
+
+title 0. Anti Virus Rescue Disk
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/ANTI.lst
+configfile /BOOT/Grub/menus/ANTI.lst
+
+title 1. Backup & Restore
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/BACKUP.lst
+configfile /BOOT/Grub/menus/BACKUP.lst
+
+title 2. Data Recovery
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/DATA.lst
+configfile /BOOT/Grub/menus/DATA.lst
+
+title 3. HDD Tools
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/HDD.lst
+configfile /BOOT/Grub/menus/HDD.lst
+
+title 4. Windows Password Reset
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/PASSWORD.lst
+configfile /BOOT/Grub/menus/PASSWORD.lst
+
+title 6. Windows Repairs
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/REPAIR.lst
+configfile /BOOT/Grub/menus/REPAIR.lst
+
+title 7. Mini Windows PE
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menus/WINPE.lst
+configfile /BOOT/Grub/menus/WINPE.lst
+
+title Boot from Hard Disk
+fallback 1 || fallback 2  
+find --set-root --ignore-floppies /bootmgr || find --set-root --ignore-floppies /ntldr
+chainloader /bootmgr || chainloader /ntldr
+savedefault --wait=2
+
+title Grub2
+find --set-root --ignore-floppies /BOOT/Grub2/g2ldr
+kernel /BOOT/Grub2/g2ldr
+
+
+title Restart
+reboot
+
+title Shutdown
+halt -no-apm
+

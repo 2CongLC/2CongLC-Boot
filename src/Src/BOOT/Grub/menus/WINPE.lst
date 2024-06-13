@@ -1,0 +1,50 @@
+set /a num=%@random%/3277 + 1
+set menu=()/BOOT/Grub/themes/menu%num%
+gfxmenu /BOOT/Grub/themes/menu%num%.GFX
+configfile (bd)/BOOT/Grub/menus/WINPE.lst
+
+iftitle [if exist /FILES/WinXPE/LiveXP.iso] Live XP (RAM <= 1GB )
+find --set-root /FILES/WinXPE/LiveXP.iso
+map --mem /FILES/WinXPE/LiveXP.iso (0xFF)
+map --hook
+chainloader (0xFF)
+
+iftitle [if exist /FILES/WinXPE/WinXPE.iso] Mini Windows XP (RAM <= 1GB )
+find --set-root /FILES/WinXPE/WinXPE.iso
+map --mem /FILES/WinXPE/WinXPE.iso (0xFF)
+map --hook
+chainloader (0xFF)
+
+iftitle [if exist /FILES/WinXPE/Win7XPE_x86.ISO] Mini Windows 7XPE x86 (RAM >= 1GB )
+find --set-root /FILES/WinXPE/Win7XPE_x86.ISO
+map --mem /FILES/WinXPE/Win7XPE_x86.ISO (0xff)
+map --hook
+root (0xff)
+chainloader (0xFF)
+
+iftitle [if exist /FILES/WinXPE/Win7XPE_x64.ISO] Mini Windows 7XPE x64 (RAM >= 2GB )
+find --set-root /FILES/WinXPE/Win7XPE_x64.ISO
+map --mem /FILES/WinXPE/Win7XPE_x64.ISO (0xff)
+map --hook
+root (0xff)
+chainloader (0xFF)
+
+iftitle [if exist /FILES/WinXPE/Win10XPE_x86.ISO] Mini Windows 10XPE x86 (RAM >= 2GB )
+find --set-root /FILES/WinXPE/Win10XPE_x86.ISO
+map --mem /FILES/WinXPE/Win10XPE_x86.ISO (0xff)
+map --hook
+root (0xff)
+chainloader (0xFF)
+
+iftitle [if exist /FILES/WinXPE/Win10XPE_x64.ISO] Mini Windows 10XPE x64 (RAM >= 4GB )
+find --set-root /FILES/WinXPE/Win10XPE_x64.ISO
+map --mem /FILES/WinXPE/Win10XPE_x64.ISO (0xff)
+map --hook
+root (0xff)
+chainloader (0xFF)
+
+
+
+title Back Main Menu
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menu.lst
+configfile /BOOT/Grub/menu.lst

@@ -1,0 +1,29 @@
+set /a num=%@random%/3277 + 1
+set menu=()/BOOT/Grub/themes/menu%num%
+gfxmenu /BOOT/Grub/themes/menu%num%.GFX
+configfile (bd)/BOOT/Grub/menus/REPAIR.lst
+
+iftitle [if exist /FILES/FDD/NTLDR.img] NTLDR Missing (XP)
+find --set-root --ignore-floppies /FILES/FDD/NTLDR.img
+map --mem /FILES/FDD/NTLDR.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/TestLCD.ima] CHZ Monitor (Test LCD)
+find --set-root --ignore-floppies /FILES/FDD/TestLCD.ima
+map --mem /FILES/FDD/TestLCD.ima (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/Memtest.img] Memtest x86 LEGACY
+find --set-root --ignore-floppies /FILES/FDD/Memtest.img
+map --mem /FILES/FDD/Memtest.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+title Back Main Menu
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menu.lst
+configfile /BOOT/Grub/menu.lst

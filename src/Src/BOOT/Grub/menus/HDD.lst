@@ -1,0 +1,48 @@
+set /a num=%@random%/3277 + 1
+set menu=()/BOOT/Grub/themes/menu%num%
+gfxmenu /BOOT/Grub/themes/menu%num%.GFX
+configfile (bd)/BOOT/Grub/menus/HDD.lst
+
+iftitle [if exist /FILES/FDD/HDDREG.img] HDD Regenerator 2011
+# http://www.dposoft.net/hdd.html
+find --set-root --ignore-floppies /FILES/FDD/HDDREG.img
+map --mem /FILES/FDD/HDDREG.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/HDAT2.img] HDAT2/CBL Hard Disk Repair Utility
+# http://www.hdat2.com/download.html
+find --set-root --ignore-floppies /FILES/FDD/HDAT2.img
+map --mem /FILES/FDD/HDAT2.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/MHDD.img] MHDD 4.6 (BadSector)
+# http://www.mhdd.ru/download.html
+find --set-root --ignore-floppies /FILES/FDD/MHDD.img
+map --mem /FILES/FDD/MHDD.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/DLG54.img] WD Data Lifeguard Diagnostic 5.04f
+# 
+find --set-root --ignore-floppies /FILES/FDD/DLG54.img
+map --mem /FILES/FDD/DLG54.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+iftitle [if exist /FILES/FDD/VCR35R.img] Victoria 3.5
+# 
+find --set-root --ignore-floppies /FILES/FDD/VCR35R.img
+map --mem /FILES/FDD/VCR35R.img (fd0)
+map --hook
+chainloader (fd0)+1
+rootnoverify (fd0)
+
+title Back Main Menu
+find --set-root --ignore-floppies --ignore-cd /BOOT/Grub/menu.lst
+configfile /BOOT/Grub/menu.lst
